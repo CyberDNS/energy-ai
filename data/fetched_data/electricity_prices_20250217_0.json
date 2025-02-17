@@ -1,0 +1,388 @@
+{
+    "data": [
+        {
+            "adjustedPrice": "0.3643",
+            "date": "2025-02-17",
+            "hour": 0,
+            "index": 0,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.3643"
+        },
+        {
+            "adjustedPrice": "0.3560",
+            "date": "2025-02-17",
+            "hour": 1,
+            "index": 1,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.3560"
+        },
+        {
+            "adjustedPrice": "0.3551",
+            "date": "2025-02-17",
+            "hour": 2,
+            "index": 2,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.3551"
+        },
+        {
+            "adjustedPrice": "0.3613",
+            "date": "2025-02-17",
+            "hour": 3,
+            "index": 3,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.3613"
+        },
+        {
+            "adjustedPrice": "0.3654",
+            "date": "2025-02-17",
+            "hour": 4,
+            "index": 4,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.3654"
+        },
+        {
+            "adjustedPrice": "0.3684",
+            "date": "2025-02-17",
+            "hour": 5,
+            "index": 5,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.3684"
+        },
+        {
+            "adjustedPrice": "0.3942",
+            "date": "2025-02-17",
+            "hour": 6,
+            "index": 6,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.3942"
+        },
+        {
+            "adjustedPrice": "0.4556",
+            "date": "2025-02-17",
+            "hour": 7,
+            "index": 7,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.4556"
+        },
+        {
+            "adjustedPrice": "0.4616",
+            "date": "2025-02-17",
+            "hour": 8,
+            "index": 8,
+            "solarProduction": "179.00",
+            "tibberTotal": "0.4616"
+        },
+        {
+            "adjustedPrice": "0.4158",
+            "date": "2025-02-17",
+            "hour": 9,
+            "index": 9,
+            "solarProduction": "623.00",
+            "tibberTotal": "0.4158"
+        },
+        {
+            "adjustedPrice": "0.2020",
+            "date": "2025-02-17",
+            "hour": 10,
+            "index": 10,
+            "solarProduction": "1359.00",
+            "tibberTotal": "0.3781"
+        },
+        {
+            "adjustedPrice": "0.0000",
+            "date": "2025-02-17",
+            "hour": 11,
+            "index": 11,
+            "solarProduction": "2236.00",
+            "tibberTotal": "0.3514"
+        },
+        {
+            "adjustedPrice": "0.0000",
+            "date": "2025-02-17",
+            "hour": 12,
+            "index": 12,
+            "solarProduction": "2840.00",
+            "tibberTotal": "0.3422"
+        },
+        {
+            "adjustedPrice": "0.0000",
+            "date": "2025-02-17",
+            "hour": 13,
+            "index": 13,
+            "solarProduction": "2854.00",
+            "tibberTotal": "0.3390"
+        },
+        {
+            "adjustedPrice": "0.0000",
+            "date": "2025-02-17",
+            "hour": 14,
+            "index": 14,
+            "solarProduction": "2736.00",
+            "tibberTotal": "0.3451"
+        },
+        {
+            "adjustedPrice": "0.0000",
+            "date": "2025-02-17",
+            "hour": 15,
+            "index": 15,
+            "solarProduction": "2386.00",
+            "tibberTotal": "0.3693"
+        },
+        {
+            "adjustedPrice": "0.1190",
+            "date": "2025-02-17",
+            "hour": 16,
+            "index": 16,
+            "solarProduction": "1644.00",
+            "tibberTotal": "0.4011"
+        },
+        {
+            "adjustedPrice": "0.4343",
+            "date": "2025-02-17",
+            "hour": 17,
+            "index": 17,
+            "solarProduction": "908.00",
+            "tibberTotal": "0.4772"
+        },
+        {
+            "adjustedPrice": "0.5344",
+            "date": "2025-02-17",
+            "hour": 18,
+            "index": 18,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.5344"
+        },
+        {
+            "adjustedPrice": "0.4682",
+            "date": "2025-02-17",
+            "hour": 19,
+            "index": 19,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.4682"
+        },
+        {
+            "adjustedPrice": "0.4236",
+            "date": "2025-02-17",
+            "hour": 20,
+            "index": 20,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.4236"
+        },
+        {
+            "adjustedPrice": "0.3966",
+            "date": "2025-02-17",
+            "hour": 21,
+            "index": 21,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.3966"
+        },
+        {
+            "adjustedPrice": "0.3778",
+            "date": "2025-02-17",
+            "hour": 22,
+            "index": 22,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.3778"
+        },
+        {
+            "adjustedPrice": "0.3661",
+            "date": "2025-02-17",
+            "hour": 23,
+            "index": 23,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.3661"
+        },
+        {
+            "adjustedPrice": "0.3701",
+            "date": "2025-02-18",
+            "hour": 0,
+            "index": 24,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.3701"
+        },
+        {
+            "adjustedPrice": "0.3607",
+            "date": "2025-02-18",
+            "hour": 1,
+            "index": 25,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.3607"
+        },
+        {
+            "adjustedPrice": "0.3590",
+            "date": "2025-02-18",
+            "hour": 2,
+            "index": 26,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.3590"
+        },
+        {
+            "adjustedPrice": "0.3513",
+            "date": "2025-02-18",
+            "hour": 3,
+            "index": 27,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.3513"
+        },
+        {
+            "adjustedPrice": "0.3496",
+            "date": "2025-02-18",
+            "hour": 4,
+            "index": 28,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.3496"
+        },
+        {
+            "adjustedPrice": "0.3570",
+            "date": "2025-02-18",
+            "hour": 5,
+            "index": 29,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.3570"
+        },
+        {
+            "adjustedPrice": "0.3828",
+            "date": "2025-02-18",
+            "hour": 6,
+            "index": 30,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.3828"
+        },
+        {
+            "adjustedPrice": "0.4384",
+            "date": "2025-02-18",
+            "hour": 7,
+            "index": 31,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.4384"
+        },
+        {
+            "adjustedPrice": "0.4425",
+            "date": "2025-02-18",
+            "hour": 8,
+            "index": 32,
+            "solarProduction": "104.00",
+            "tibberTotal": "0.4425"
+        },
+        {
+            "adjustedPrice": "0.3827",
+            "date": "2025-02-18",
+            "hour": 9,
+            "index": 33,
+            "solarProduction": "279.00",
+            "tibberTotal": "0.3827"
+        },
+        {
+            "adjustedPrice": "0.3598",
+            "date": "2025-02-18",
+            "hour": 10,
+            "index": 34,
+            "solarProduction": "471.00",
+            "tibberTotal": "0.3598"
+        },
+        {
+            "adjustedPrice": "0.3425",
+            "date": "2025-02-18",
+            "hour": 11,
+            "index": 35,
+            "solarProduction": "644.00",
+            "tibberTotal": "0.3425"
+        },
+        {
+            "adjustedPrice": "0.3266",
+            "date": "2025-02-18",
+            "hour": 12,
+            "index": 36,
+            "solarProduction": "749.00",
+            "tibberTotal": "0.3266"
+        },
+        {
+            "adjustedPrice": "0.3173",
+            "date": "2025-02-18",
+            "hour": 13,
+            "index": 37,
+            "solarProduction": "761.00",
+            "tibberTotal": "0.3173"
+        },
+        {
+            "adjustedPrice": "0.3189",
+            "date": "2025-02-18",
+            "hour": 14,
+            "index": 38,
+            "solarProduction": "837.00",
+            "tibberTotal": "0.3290"
+        },
+        {
+            "adjustedPrice": "0.3051",
+            "date": "2025-02-18",
+            "hour": 15,
+            "index": 39,
+            "solarProduction": "932.00",
+            "tibberTotal": "0.3428"
+        },
+        {
+            "adjustedPrice": "0.3644",
+            "date": "2025-02-18",
+            "hour": 16,
+            "index": 40,
+            "solarProduction": "751.00",
+            "tibberTotal": "0.3644"
+        },
+        {
+            "adjustedPrice": "0.4233",
+            "date": "2025-02-18",
+            "hour": 17,
+            "index": 41,
+            "solarProduction": "410.00",
+            "tibberTotal": "0.4233"
+        },
+        {
+            "adjustedPrice": "0.4194",
+            "date": "2025-02-18",
+            "hour": 18,
+            "index": 42,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.4194"
+        },
+        {
+            "adjustedPrice": "0.3974",
+            "date": "2025-02-18",
+            "hour": 19,
+            "index": 43,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.3974"
+        },
+        {
+            "adjustedPrice": "0.3814",
+            "date": "2025-02-18",
+            "hour": 20,
+            "index": 44,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.3814"
+        },
+        {
+            "adjustedPrice": "0.3659",
+            "date": "2025-02-18",
+            "hour": 21,
+            "index": 45,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.3659"
+        },
+        {
+            "adjustedPrice": "0.3570",
+            "date": "2025-02-18",
+            "hour": 22,
+            "index": 46,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.3570"
+        },
+        {
+            "adjustedPrice": "0.3481",
+            "date": "2025-02-18",
+            "hour": 23,
+            "index": 47,
+            "solarProduction": "0.00",
+            "tibberTotal": "0.3481"
+        }
+    ]
+}

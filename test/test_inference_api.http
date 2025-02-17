@@ -1,0 +1,25 @@
+POST http://localhost:5000/infer_change_rate
+Content-Type: application/json
+
+{
+  "current_soc": 0.8,
+  "capacity": 7600,
+  "max_change_rate": 1200,
+  "current_step": 17
+}
+
+###
+
+POST http://localhost:5000/publish_inference
+Content-Type: application/json
+
+{
+  "current_soc": 0.8,
+  "capacity": 7600,
+  "max_change_rate": 1200,
+  "current_step": 17
+}
+
+###
+
+GET http://localhost:5000/get_historical_data

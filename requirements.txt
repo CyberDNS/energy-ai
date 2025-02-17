@@ -1,0 +1,9 @@
+gymnasium[accept-rom-license]  # Minimal Gym install, without Atari dependencies
+stable-baselines3
+numpy
+pandas
+matplotlib
+requests
+paho-mqtt
+python-dotenv
+flask
