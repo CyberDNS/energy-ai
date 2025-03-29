@@ -15,7 +15,7 @@ COPY src/ ./src/
 COPY data/models/ ./data/models/
 
 # Set the command to run the main script
-CMD ["python", "src/main.py"]
+CMD ["python", "src/app.py"]
 
 # Expose any necessary ports (if applicable)
 # EXPOSE 8000

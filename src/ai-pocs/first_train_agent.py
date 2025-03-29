@@ -13,7 +13,7 @@ TRAINING_STEPS = 300_000
 
 DATA_PATH = os.getenv("DATA_PATH")
 MODEL_PATH = f"{DATA_PATH}/models/battery_rl_model"
-PRICE_DATA_PATH_PATTERN = f"{DATA_PATH}/fetched_data/electricity_prices_*.json"
+PRICE_DATA_PATH_PATTERN = f"{DATA_PATH}/fetched_data/electricity_prices.json"
 
 
 def train():

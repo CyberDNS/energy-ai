@@ -1,0 +1,59 @@
+### Optimize Battery Schedule (Basic)
+# Calls the /optimize endpoint with required parameters.
+# Assumes default battery parameters are used by the server.
+# The forecast data is fetched from MQTT by the server.
+
+POST http://localhost:5001/optimize
+Content-Type: application/json
+
+{
+    "current_soc_percent": 33,
+    "current_time_index": 3
+}
+
+
+### Optimize Battery Schedule (With Custom Battery Parameters)
+# Calls the /optimize endpoint, overriding the default battery parameters.
+# Useful if you want to test different battery configurations without restarting the server.
+
+POST http://localhost:5001/optimize
+Content-Type: application/json
+
+{
+    "current_soc_percent": 50,
+    "current_time_index": 8,
+    "battery_params": {
+        "capacity_kwh": 10.0,
+        "max_rate_kw": 2.0,
+        "min_soc_percent": 15,
+        "efficiency_roundtrip": 0.88
+    }
+}
+
+### Optimize Battery Schedule (Example: Low SOC, Evening Time)
+# Example scenario for testing.
+
+POST http://localhost:5001/optimize
+Content-Type: application/json
+
+{
+    "current_soc_percent": 15,
+    "current_time_index": 18
+}
+
+### Optimize Battery Schedule (Example: High SOC, Morning Time)
+# Example scenario for testing.
+POST http://localhost:5001/optimize
+Content-Type: application/json
+
+{
+    "current_soc_percent": 41,
+    "current_time_index": 5,
+    "battery_params":
+    {
+        "capacity_kwh": 7.6,
+        "max_rate_kw": 1.2,
+        "min_soc_percent": 10,
+        "efficiency_roundtrip": 0.94
+    }
+}
