@@ -107,3 +107,39 @@ Logs are output to the console in the following format:
 ```
 Adjust the logging level by modifying the `logging.basicConfig` configuration in `app.py`.
 
+---
+
+## Integration with Smart Home Systems
+
+This project can be integrated into smart home systems to optimize energy usage and visualize data. In my setup, I integrated the system using ioBroker, Tibber, PVForecast, and a Zendure battery. The data is processed and pushed into MQTT, which is then consumed by Home Assistant to display charts.
+
+### Components Used:
+1. **ioBroker**: For managing states and integrating with Tibber and PVForecast.
+2. **Tibber**: Provides electricity price data.
+3. **PVForecast**: Supplies solar production forecasts.
+4. **Zendure Battery**: Used for energy storage and control.
+5. **MQTT**: Acts as a communication layer for optimized schedules.
+6. **Home Assistant**: Displays the data using custom charts.
+
+### Code Disclaimer:
+The provided code is heavily adapted for my specific use case. You may need to modify it to suit your own setup and requirements.
+
+#### Relevant Files:
+- `tibber-prices.js`: Processes Tibber prices and solar forecasts to calculate adjusted prices.
+- `zendure-control-ai.js`: Controls the Zendure battery based on AI-optimized schedules.
+- `hass-apexcharts-pricegraph.yml`: Displays Tibber prices and adjusted prices in Home Assistant.
+- `hass-apexcharts-actionschart.yml`: Visualizes battery actions in Home Assistant.
+
+---
+
+## Example Charts in Home Assistant
+
+### Tibber Prices Adjusted by Solar Production
+The `hass-apexcharts-pricegraph.yml` file configures a chart to display Tibber prices and adjusted prices based on solar production.
+
+<img src="assets/hass-integration-1.png" alt="Energy AI Logo" width="400">
+
+### Battery Actions
+The `hass-apexcharts-actionschart.yml` file configures a chart to show battery charge and discharge actions.
+
+<img src="assets/hass-integration-2.png" alt="Energy AI Logo" width="400">

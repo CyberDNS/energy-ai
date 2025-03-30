@@ -1,0 +1,52 @@
+type: custom:apexcharts-card
+now:
+  show: true
+  label: now
+header:
+  show: true
+  title: Battery actions
+graph_span: 2d
+span:
+  start: day
+update_interval: 5min
+apex_config:
+  chart:
+    type: bar
+  legend:
+    show: false
+  xaxis:
+    type: datetime
+  yaxis:
+    - id: actions
+      opposite: false
+      decimalsInFloat: 1
+  tooltip:
+    "y":
+      formatter: |
+        function(value) {
+          return value.toFixed(1);
+        }
+  plotOptions:
+    bar:
+      horizontal: false
+      columnWidth: 80%
+      colors:
+        ranges:
+          - from: -1
+            to: 0
+            color: red
+          - from: 0.1
+            to: 1
+            color: green
+series:
+  - entity: sensor.energy_ai_actions
+    name: Battery
+    yaxis_id: actions
+    type: column
+    data_generator: >
+      const data = entity.attributes.data; if (!data) return []; return
+      data.map(item => {
+        const dateString = `${item.date} ${String(item.hour).padStart(2,'0')}:00`;
+        const timestamp = new Date(dateString).getTime();
+        return [ timestamp, parseFloat(item.changeRate) ];
+      });

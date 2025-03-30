@@ -1,0 +1,91 @@
+type: custom:apexcharts-card
+now:
+  show: true
+  label: now
+header:
+  show: true
+  title: Tibber prices adjusted by solar production
+graph_span: 2d
+span:
+  start: day
+update_interval: 5min
+apex_config:
+  legend:
+    show: false
+  annotations:
+    yaxis:
+      - "y": 0.22
+        borderColor: green
+        label:
+          text: Very low
+          style:
+            color: "#fff"
+            background: green
+      - "y": 0.26
+        borderColor: lightgreen
+        label:
+          text: Low
+          style:
+            color: "#fff"
+            background: lightgreen
+      - "y": 0.3
+        borderColor: blue
+        label:
+          text: Normal
+          style:
+            color: "#fff"
+            background: blue
+      - "y": 0.34
+        borderColor: orange
+        label:
+          text: High
+          style:
+            color: "#fff"
+            background: orange
+      - "y": 0.4
+        borderColor: red
+        label:
+          text: Very high
+          style:
+            color: "#fff"
+            background: red
+  xaxis:
+    type: datetime
+  yaxis:
+    - id: prices
+      opposite: false
+      decimalsInFloat: 3
+  tooltip:
+    "y":
+      formatter: |
+        function(value) {
+          return value.toFixed(3);
+        }
+series:
+  - entity: sensor.energy_cost_adjusted_price_list
+    name: Tibber
+    yaxis_id: prices
+    color: blue
+    stroke_dash: 3
+    curve: smooth
+    extend_to: false
+    data_generator: >
+      const data = entity.attributes.data; if (!data) return []; return
+      data.map(item => {
+        const dateString = `${item.date} ${String(item.hour).padStart(2,'0')}:00`;
+        const timestamp = new Date(dateString).getTime();
+        return [ timestamp, parseFloat(item.tibberTotal) ];
+      });
+  - entity: sensor.energy_cost_adjusted_price_list
+    name: Adjusted
+    yaxis_id: prices
+    color: orange
+    curve: smooth
+    extend_to: false
+    data_generator: >
+      const data = entity.attributes.data; if (!data) return []; return
+      data.map(item => {
+        const dateString = `${item.date} ${String(item.hour).padStart(2,'0')}:00`;
+        const timestamp = new Date(dateString).getTime();
+        return [ timestamp, parseFloat(item.adjustedPrice) ];
+      });
