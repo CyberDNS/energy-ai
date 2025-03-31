@@ -9,10 +9,8 @@ from datetime import datetime
 # --- Configure Logging ---
 logging.basicConfig(
     level=logging.INFO,  # Default logging level
-    format='%(asctime)s [%(levelname)s] %(message)s',
-    handlers=[
-        logging.StreamHandler()  # Log to stdout for Docker compatibility
-    ]
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[logging.StreamHandler()],  # Log to stdout for Docker compatibility
 )
 logger = logging.getLogger(__name__)
 
@@ -48,8 +46,7 @@ def run_optimization(
         BATT_CAPACITY_KWH = float(battery_params["capacity_kwh"])
         BATT_MAX_RATE_KW = float(battery_params["max_rate_kw"])
         BATT_MIN_SOC_PERCENT = float(battery_params["min_soc_percent"])
-        BATT_EFFICIENCY_ROUNDTRIP = float(
-            battery_params["efficiency_roundtrip"])
+        BATT_EFFICIENCY_ROUNDTRIP = float(battery_params["efficiency_roundtrip"])
     except (KeyError, ValueError) as e:
         logger.error(f"Error parsing battery parameters: {e}")
         return f"Error parsing battery parameters: {e}", None, None, None
@@ -80,8 +77,7 @@ def run_optimization(
 
     # Extract relevant forecast data
     try:
-        prices = {item["index"]: float(item["adjustedPrice"])
-                  for item in forecast_data}
+        prices = {item["index"]: float(item["adjustedPrice"]) for item in forecast_data}
         hours = {item["index"]: item["hour"] for item in forecast_data}
         dates = {item["index"]: item["date"] for item in forecast_data}
     except (KeyError, ValueError, TypeError) as e:
@@ -105,8 +101,7 @@ def run_optimization(
     # --- Logging Parameters ---
     logger.debug("--- Running Optimization ---")
     logger.debug(f"Battery Capacity: {BATT_CAPACITY_KWH} kWh")
-    logger.debug(
-        f"Min SOC: {BATT_MIN_SOC_PERCENT}% ({BATT_MIN_SOC_KWH:.2f} kWh)")
+    logger.debug(f"Min SOC: {BATT_MIN_SOC_PERCENT}% ({BATT_MIN_SOC_KWH:.2f} kWh)")
     logger.debug(f"Max Charge/Discharge Rate: {BATT_MAX_RATE_KW} kW")
     logger.debug(
         f"Round-trip Efficiency: {BATT_EFFICIENCY_ROUNDTRIP*100:.1f}% (One-way: {BATT_EFFICIENCY_ONEWAY*100:.1f}%)"
@@ -114,8 +109,7 @@ def run_optimization(
     logger.debug(
         f"Current Time Index: {CURRENT_TIME_INDEX} (Hour {hours.get(CURRENT_TIME_INDEX, 'N/A')})"
     )
-    logger.debug(
-        f"Initial SOC: {CURRENT_SOC_PERCENT}% ({INITIAL_SOC_KWH:.2f} kWh)")
+    logger.debug(f"Initial SOC: {CURRENT_SOC_PERCENT}% ({INITIAL_SOC_KWH:.2f} kWh)")
     logger.debug(
         f"Optimization Horizon: {T} hours (Indices {optimization_indices[0]} to {optimization_indices[-1]})"
     )
@@ -149,8 +143,7 @@ def run_optimization(
         cat="Continuous",
     )
     is_charging = pulp.LpVariable.dicts("IsCharging", time_steps, cat="Binary")
-    is_discharging = pulp.LpVariable.dicts(
-        "IsDischarging", time_steps, cat="Binary")
+    is_discharging = pulp.LpVariable.dicts("IsDischarging", time_steps, cat="Binary")
 
     # Define Objective Function (Maximize Savings)
     prob += (
@@ -195,8 +188,7 @@ def run_optimization(
         )
 
         # Mutual Exclusivity Constraint
-        prob += is_charging[t] + \
-            is_discharging[t] <= 1, f"Mutual_Exclusivity_{t}"
+        prob += is_charging[t] + is_discharging[t] <= 1, f"Mutual_Exclusivity_{t}"
 
     # Solve the Problem
     logger.info("Solving the optimization problem...")
@@ -212,8 +204,7 @@ def run_optimization(
 
     if status_string == "Optimal":
         total_savings = pulp.value(prob.objective)
-        logger.info(
-            f"Optimal Schedule Found! Max Savings: {total_savings:.4f}")
+        logger.info(f"Optimal Schedule Found! Max Savings: {total_savings:.4f}")
 
         # Determine action for the next hour (t=0)
         next_charge = charge_vars[0].varValue
@@ -221,7 +212,7 @@ def run_optimization(
         if next_charge > 0.01:
             action_now = next_charge
         elif next_discharge > 0.01:
-            action_now = next_discharge
+            action_now = -1 * next_discharge
 
         logger.info(
             f"Action for Next Hour (Index {optimization_indices[0]}): {action_now}"
@@ -282,14 +273,16 @@ def run_optimization(
         for t in range(min(12, len(time_steps))):  # Limit to the next 12 hours
             idx = opt_idx_map[t]
             charge = charge_vars[t].varValue if charge_vars[t].varValue else 0.0
-            discharge = discharge_vars[t].varValue if discharge_vars[t].varValue else 0.0
+            discharge = (
+                discharge_vars[t].varValue if discharge_vars[t].varValue else 0.0
+            )
 
             if charge > 0.01:
-                next_12_hours_plan.append(
-                    f"Hour {hours[idx]}: Charge {charge:.2f} kWh")
+                next_12_hours_plan.append(f"Hour {hours[idx]}: Charge {charge:.2f} kWh")
             elif discharge > 0.01:
                 next_12_hours_plan.append(
-                    f"Hour {hours[idx]}: Discharge {discharge:.2f} kWh")
+                    f"Hour {hours[idx]}: Discharge {discharge:.2f} kWh"
+                )
             else:
                 next_12_hours_plan.append(f"Hour {hours[idx]}: Hold")
 

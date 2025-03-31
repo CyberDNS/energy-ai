@@ -136,7 +136,7 @@ function GetActionFromAi(currentIndex) {
 
     lg(`AI Body: ${requestBody}`, true);
 
-    const url = "http://example.com/optimize"; // Replace with environment variable
+    const url = "http://bear.cyberdns.org:5321/optimize";
     const command = `curl -s -X POST -H "Content-Type: application/json" -d '${requestBody}' ${url}`;
 
     try {
@@ -146,8 +146,8 @@ function GetActionFromAi(currentIndex) {
         if (body && body.action_next_hour !== undefined) {
             lg(`AI Response: ${JSON.stringify(body)}`, true);
             return {
-                plannedDischarge: Math.max(body.action_next_hour, 0) * 1000,
-                plannedCharge: -1 * Math.min(body.action_next_hour, 0) * 1000
+                plannedDischarge: -1 * Math.min(body.action_next_hour, 0) * 1000,
+                plannedCharge: Math.max(body.action_next_hour, 0) * 1000
             };
         } else {
             lg("Invalid AI response format", true);
