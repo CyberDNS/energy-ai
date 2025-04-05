@@ -10,7 +10,8 @@ from datetime import datetime
 logging.basicConfig(
     level=logging.INFO,  # Default logging level
     format="%(asctime)s [%(levelname)s] %(message)s",
-    handlers=[logging.StreamHandler()],  # Log to stdout for Docker compatibility
+    # Log to stdout for Docker compatibility
+    handlers=[logging.StreamHandler()],
 )
 logger = logging.getLogger(__name__)
 
@@ -26,7 +27,7 @@ def run_optimization(
         initial_soc_percent (float): Current battery SOC (0-100).
         current_time_index (int): The starting index in the forecast data.
         battery_params (dict): Dictionary with battery parameters like
-                               'capacity_kwh', 'max_rate_kw',
+                               'capacity_kwh', 'max_charge_rate_kw', 'max_discharge_rate_kw',
                                'min_soc_percent', 'efficiency_roundtrip'.
 
     Returns:
@@ -44,9 +45,12 @@ def run_optimization(
     # Battery Parameters from dict
     try:
         BATT_CAPACITY_KWH = float(battery_params["capacity_kwh"])
-        BATT_MAX_RATE_KW = float(battery_params["max_rate_kw"])
+        BATT_MAX_CHARGE_RATE_KW = float(battery_params["max_charge_rate_kw"])
+        BATT_MAX_DISCHARGE_RATE_KW = float(
+            battery_params["max_discharge_rate_kw"])
         BATT_MIN_SOC_PERCENT = float(battery_params["min_soc_percent"])
-        BATT_EFFICIENCY_ROUNDTRIP = float(battery_params["efficiency_roundtrip"])
+        BATT_EFFICIENCY_ROUNDTRIP = float(
+            battery_params["efficiency_roundtrip"])
     except (KeyError, ValueError) as e:
         logger.error(f"Error parsing battery parameters: {e}")
         return f"Error parsing battery parameters: {e}", None, None, None
@@ -73,11 +77,15 @@ def run_optimization(
         logger.error("Error calculating efficiency (zero efficiency?)")
         return f"Error calculating efficiency (zero efficiency?)", None, None, None
 
-    BATT_MAX_ENERGY_PER_STEP = BATT_MAX_RATE_KW * 1.0  # Energy in 1 hour
+    BATT_MAX_CHARGE_ENERGY_PER_STEP = BATT_MAX_CHARGE_RATE_KW * \
+        1.0  # Charge Energy in 1 hour
+    BATT_MAX_DISCHARGE_ENERGY_PER_STEP = BATT_MAX_DISCHARGE_RATE_KW * \
+        1.0  # Discharge Energy in 1 hour
 
     # Extract relevant forecast data
     try:
-        prices = {item["index"]: float(item["adjustedPrice"]) for item in forecast_data}
+        prices = {item["index"]: float(item["adjustedPrice"])
+                  for item in forecast_data}
         hours = {item["index"]: item["hour"] for item in forecast_data}
         dates = {item["index"]: item["date"] for item in forecast_data}
     except (KeyError, ValueError, TypeError) as e:
@@ -101,15 +109,19 @@ def run_optimization(
     # --- Logging Parameters ---
     logger.debug("--- Running Optimization ---")
     logger.debug(f"Battery Capacity: {BATT_CAPACITY_KWH} kWh")
-    logger.debug(f"Min SOC: {BATT_MIN_SOC_PERCENT}% ({BATT_MIN_SOC_KWH:.2f} kWh)")
-    logger.debug(f"Max Charge/Discharge Rate: {BATT_MAX_RATE_KW} kW")
+    logger.debug(
+        f"Min SOC: {BATT_MIN_SOC_PERCENT}% ({BATT_MIN_SOC_KWH:.2f} kWh)")
+    logger.debug(f"Max Charge Rate: {BATT_MAX_CHARGE_RATE_KW} kW")
+    logger.debug(f"Max Discharge Rate: {BATT_MAX_DISCHARGE_RATE_KW} kW")
+
     logger.debug(
         f"Round-trip Efficiency: {BATT_EFFICIENCY_ROUNDTRIP*100:.1f}% (One-way: {BATT_EFFICIENCY_ONEWAY*100:.1f}%)"
     )
     logger.debug(
         f"Current Time Index: {CURRENT_TIME_INDEX} (Hour {hours.get(CURRENT_TIME_INDEX, 'N/A')})"
     )
-    logger.debug(f"Initial SOC: {CURRENT_SOC_PERCENT}% ({INITIAL_SOC_KWH:.2f} kWh)")
+    logger.debug(
+        f"Initial SOC: {CURRENT_SOC_PERCENT}% ({INITIAL_SOC_KWH:.2f} kWh)")
     logger.debug(
         f"Optimization Horizon: {T} hours (Indices {optimization_indices[0]} to {optimization_indices[-1]})"
     )
@@ -125,14 +137,14 @@ def run_optimization(
         "Charge",
         time_steps,
         lowBound=0,
-        upBound=BATT_MAX_ENERGY_PER_STEP,
+        upBound=BATT_MAX_CHARGE_ENERGY_PER_STEP,
         cat="Continuous",
     )
     discharge_vars = pulp.LpVariable.dicts(
         "Discharge",
         time_steps,
         lowBound=0,
-        upBound=BATT_MAX_ENERGY_PER_STEP,
+        upBound=BATT_MAX_DISCHARGE_ENERGY_PER_STEP,
         cat="Continuous",
     )
     soc_vars = pulp.LpVariable.dicts(
@@ -143,7 +155,8 @@ def run_optimization(
         cat="Continuous",
     )
     is_charging = pulp.LpVariable.dicts("IsCharging", time_steps, cat="Binary")
-    is_discharging = pulp.LpVariable.dicts("IsDischarging", time_steps, cat="Binary")
+    is_discharging = pulp.LpVariable.dicts(
+        "IsDischarging", time_steps, cat="Binary")
 
     # Define Objective Function (Maximize Savings)
     prob += (
@@ -179,16 +192,18 @@ def run_optimization(
 
         # Enforce Charge/Discharge Rate Limits using Binary Variables
         prob += (
-            charge_vars[t] <= is_charging[t] * BATT_MAX_ENERGY_PER_STEP,
+            charge_vars[t] <= is_charging[t] * BATT_MAX_CHARGE_ENERGY_PER_STEP,
             f"Charge_Rate_{t}",
         )
         prob += (
-            discharge_vars[t] <= is_discharging[t] * BATT_MAX_ENERGY_PER_STEP,
+            discharge_vars[t] <= is_discharging[t] *
+            BATT_MAX_DISCHARGE_ENERGY_PER_STEP,
             f"Discharge_Rate_{t}",
         )
 
         # Mutual Exclusivity Constraint
-        prob += is_charging[t] + is_discharging[t] <= 1, f"Mutual_Exclusivity_{t}"
+        prob += is_charging[t] + \
+            is_discharging[t] <= 1, f"Mutual_Exclusivity_{t}"
 
     # Solve the Problem
     logger.info("Solving the optimization problem...")
@@ -204,7 +219,8 @@ def run_optimization(
 
     if status_string == "Optimal":
         total_savings = pulp.value(prob.objective)
-        logger.info(f"Optimal Schedule Found! Max Savings: {total_savings:.4f}")
+        logger.info(
+            f"Optimal Schedule Found! Max Savings: {total_savings:.4f}")
 
         # Determine action for the next hour (t=0)
         next_charge = charge_vars[0].varValue
@@ -240,16 +256,16 @@ def run_optimization(
                 action = "Charge"
                 energy = charge
                 change_rate = (
-                    energy / BATT_MAX_ENERGY_PER_STEP
-                    if BATT_MAX_ENERGY_PER_STEP > 0
+                    energy / BATT_MAX_CHARGE_ENERGY_PER_STEP
+                    if BATT_MAX_CHARGE_ENERGY_PER_STEP > 0
                     else 0
                 )
             elif discharge > 0.01:
                 action = "Discharge"
                 energy = -discharge  # Show discharge as negative
                 change_rate = (
-                    energy / BATT_MAX_ENERGY_PER_STEP
-                    if BATT_MAX_ENERGY_PER_STEP > 0
+                    energy / BATT_MAX_DISCHARGE_ENERGY_PER_STEP
+                    if BATT_MAX_DISCHARGE_ENERGY_PER_STEP > 0
                     else 0
                 )
 
@@ -278,7 +294,8 @@ def run_optimization(
             )
 
             if charge > 0.01:
-                next_12_hours_plan.append(f"Hour {hours[idx]}: Charge {charge:.2f} kWh")
+                next_12_hours_plan.append(
+                    f"Hour {hours[idx]}: Charge {charge:.2f} kWh")
             elif discharge > 0.01:
                 next_12_hours_plan.append(
                     f"Hour {hours[idx]}: Discharge {discharge:.2f} kWh"

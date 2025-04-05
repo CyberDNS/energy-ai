@@ -42,7 +42,8 @@ else:
 
 DEFAULT_BATTERY_PARAMS = {
     'capacity_kwh': 7.4,
-    'max_rate_kw': 0.8,
+    'max_charge_rate_kw': 1.2,
+    'max_discharge_rate_kw': 0.8,
     'min_soc_percent': 10,
     'efficiency_roundtrip': 0.90
 }

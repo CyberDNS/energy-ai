@@ -24,7 +24,8 @@ Content-Type: application/json
     "current_time_index": 8,
     "battery_params": {
         "capacity_kwh": 10.0,
-        "max_rate_kw": 2.0,
+        "max_charge_rate_kw": 2.0,
+        "max_discharge_rate_kw": 0.5,
         "min_soc_percent": 15,
         "efficiency_roundtrip": 0.88
     }
@@ -52,7 +53,8 @@ Content-Type: application/json
     "battery_params":
     {
         "capacity_kwh": 7.6,
-        "max_rate_kw": 1.2,
+        "max_charge_rate_kw": 1.2,
+        "max_discharge_rate_kw": 0.8,
         "min_soc_percent": 10,
         "efficiency_roundtrip": 0.94
     }
